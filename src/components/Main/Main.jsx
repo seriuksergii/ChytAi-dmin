@@ -19,7 +19,7 @@ const Main = () => {
           </div>
         </div>
         <div className="user">
-          <img src="/src/assets/user-icon.png" alt="user" />
+          <img src="/user-icon.png" alt="user" />
         </div>
       </div>
       {/* <Card /> */}
