@@ -19,14 +19,18 @@ const LoginPage = () => {
 
   const onSubmit = async (data) => {
     try {
-      await loginUser(data.email, data.password);
-
-      nav('/dashboard');
+      const loginResult = await loginUser(data.email, data.password);
+      if (loginResult) {
+        nav('/dashboard'); 
+      } else {
+        alert('Невірні дані для входу. Спробуйте ще раз.');
+      }
     } catch (error) {
       console.error('Login error:', error);
-      alert('An error occurred during login. Please try again.');
+      alert('Сталася помилка під час входу. Спробуйте ще раз.');
     }
   };
+  
 
   const handleNavigate = () => {
     nav('/register');
