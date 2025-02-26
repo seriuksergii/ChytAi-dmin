@@ -1,0 +1,64 @@
+{
+  "recentOrders": [
+    {
+      "name": "Усі небезпечні речі",
+      "price": "₴400",
+      "payment": "Visa",
+      "status": "delivered"
+    },
+    {
+      "name": "Діва, матір і третя",
+      "price": "₴380",
+      "payment": "Visa",
+      "status": "pending"
+    },
+    {
+      "name": "Apple Watch",
+      "price": "$1200",
+      "payment": "Paid",
+      "status": "return"
+    },
+    {
+      "name": "Addidas Shoes",
+      "price": "$620",
+      "payment": "Due",
+      "status": "inProgress"
+    },
+    {
+      "name": "Dell Laptop",
+      "price": "$110",
+      "payment": "Due",
+      "status": "pending"
+    },
+    {
+      "name": "Apple Watch",
+      "price": "$1200",
+      "payment": "Paid",
+      "status": "return"
+    },
+    {
+      "name": "Addidas Shoes",
+      "price": "$620",
+      "payment": "Due",
+      "status": "inProgress"
+    },
+    {
+      "name": "Star Refrigerator",
+      "price": "$1200",
+      "payment": "Paid",
+      "status": "delivered"
+    },
+    {
+      "name": "Dell Laptop",
+      "price": "$110",
+      "payment": "Due",
+      "status": "pending"
+    },
+    {
+      "name": "Apple Watch",
+      "price": "$1200",
+      "payment": "Paid",
+      "status": "return"
+    }
+  ]
+}

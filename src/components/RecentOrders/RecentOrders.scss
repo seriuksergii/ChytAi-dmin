@@ -1,0 +1,111 @@
+$primary-color: #d88f42;
+$delivered-color: #8de02c;
+$pending-color: #e9b10a;
+$return-color: #f00;
+$in-progress-color: #1795ce;
+$white: #fff;
+$black: #000;
+
+.recent-orders-container {
+  position: relative;
+  width: 100%;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 30px;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.recent-orders-card {
+  position: relative;
+  display: grid;
+  min-height: 500px;
+  background: $white;
+  padding: 20px;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  border: 3px solid $primary-color;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  h2 {
+    font-weight: 600;
+    color: $primary-color;
+    text-transform: uppercase;
+  }
+
+  .view-all-btn {
+    position: relative;
+    padding: 5px 10px;
+    background: $primary-color;
+    text-decoration: none;
+    color: $white;
+    border-radius: 6px;
+  }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+
+  thead td {
+    font-weight: 600;
+  }
+
+  tr {
+    color: $black;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      background: $primary-color;
+      color: $white;
+    }
+
+    td {
+      padding: 10px;
+
+      &:last-child {
+        text-align: end;
+      }
+
+      &:nth-child(2) {
+        text-align: end;
+      }
+
+      &:nth-child(3) {
+        text-align: center;
+      }
+    }
+  }
+}
+
+.status {
+  padding: 2px 4px;
+  color: $white;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+
+  &.delivered {
+    background: $delivered-color;
+  }
+
+  &.pending {
+    background: $pending-color;
+  }
+
+  &.return {
+    background: $return-color;
+  }
+
+  &.inProgress {
+    background: $in-progress-color;
+  }
+}

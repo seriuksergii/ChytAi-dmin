@@ -1,0 +1,123 @@
+$primary-color: #d88f42;
+$error-color: #ff4d4f;
+$white-color: #fff;
+$input-placeholder: rgba(255, 255, 255, 0.8);
+$box-shadow-color: rgba(0, 0, 0, 0.25);
+$blur-effect: 20px;
+$border-radius: 2rem;
+$padding: 4rem;
+$input-height: 50px;
+
+.register-container {
+  background-image: url('../../assets/bg-image.jpg');
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-wrapper {
+  width: 400px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid $primary-color;
+  backdrop-filter: blur($blur-effect);
+  box-shadow: 0 4px 12px $box-shadow-color;
+  color: $white-color;
+  border-radius: $border-radius;
+  padding: $padding;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+
+  @media (min-width: 768px) {
+    padding: 2.5rem;
+  }
+}
+
+.register-title {
+  text-align: center;
+  font-size: clamp(1.75rem, 5vw, 2.25rem);
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: $white-color;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  background: transparent;
+  border: 2px solid $primary-color;
+  border-radius: $border-radius;
+  font-size: 1rem;
+  color: $white-color;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+  height: $input-height;
+
+  &::placeholder {
+    color: $input-placeholder;
+  }
+
+  &:focus {
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+  }
+
+  &.input-error {
+    border-color: $error-color;
+  }
+}
+
+.error-message {
+  color: $error-color;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+.register-button {
+  width: 100%;
+  padding: 0.875rem;
+  background: $primary-color;
+  color: $white-color;
+  font-size: 1.125rem;
+  font-weight: 700;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  transform-origin: center;
+
+  &:hover {
+    background: rgba(235, 158, 76, 0.9);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  &:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.navigate-text {
+  cursor: pointer;
+  color: $white-color;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
