@@ -20,6 +20,8 @@ const LoginPage = () => {
   const onSubmit = async (data) => {
     try {
       await loginUser(data.email, data.password);
+
+      nav('/dashboard');
     } catch (error) {
       console.error('Login error:', error);
       alert('An error occurred during login. Please try again.');

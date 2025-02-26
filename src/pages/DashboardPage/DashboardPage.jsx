@@ -1,7 +1,7 @@
 import './DashboardPage.scss';
 import Navigation from '../../components/Navigation/Navigation';
-import RecentOrders from '../../components/RecentOrders/RecentOrders';
-import RecentCustomers from '../../components/RecentCustomers/RecentCustomers';
+// import RecentOrders from '../../components/RecentOrders/RecentOrders';
+// import RecentCustomers from '../../components/RecentCustomers/RecentCustomers';
 import { IoMenuOutline, IoSearchOutline } from 'react-icons/io5';
 import { FaUserCircle } from 'react-icons/fa';
 import Main from '../../components/Main/Main';
@@ -36,8 +36,8 @@ const DashboardPage = () => {
         </div>
 
         <div className="details">
-          <RecentOrders />
-          <RecentCustomers />
+          {/* <RecentOrders />
+          <RecentCustomers /> */}
         </div>
       </div>
       <Main />
