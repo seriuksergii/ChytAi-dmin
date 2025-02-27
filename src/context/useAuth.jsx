@@ -26,12 +26,12 @@ export const AuthProvider = ({ children }) => {
     try {
       const user = await login(email, password);
       if (user) {
-        setUser(user); // Встановлюємо користувача лише при успішному вході
-        nav('/dashboard'); // Перенаправляємо на /dashboard
-        return true; // Повертаємо true, щоб показати успішний вхід
+        setUser(user);
+        nav('/dashboard');
+        return true;
       } else {
         alert('Incorrect email or password');
-        return false; // Повертаємо false, щоб показати невдалий вхід
+        return false;
       }
     } catch (error) {
       console.error('Login error:', error);

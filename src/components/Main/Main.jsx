@@ -1,12 +1,14 @@
-// import Card from '../Card/Card';
-// import RecentCustomers from '../RecentCustomers/RecentCustomers';
-import RecentOrders from '../RecentOrders/RecentOrders';
+import Categories from '../Categories/Categories';
+import Scrappers from '../Scrappers/Scrappers';
+import Users from '../Users/Users';
 import './Main.scss';
 import { GoSearch } from 'react-icons/go';
+import PropTypes from 'prop-types';
 
-const Main = () => {
+
+const Main = ({ activeTab }) => {
   return (
-    <div className="main">
+    <div className="main__container">
       <div className="topbar">
         <div className="search">
           <div className="search">
@@ -22,11 +24,16 @@ const Main = () => {
           <img src="/user-icon.png" alt="user" />
         </div>
       </div>
-      {/* <Card /> */}
-      <RecentOrders />
-      {/* <RecentCustomers /> */}
+
+      {activeTab === 'users' && <Users />}
+      {activeTab === 'categories' && <Categories />}
+      {activeTab === 'scrappers' && <Scrappers />}
+     
     </div>
   );
+};
+Main.propTypes = {
+  activeTab: PropTypes.string.isRequired,
 };
 
 export default Main;

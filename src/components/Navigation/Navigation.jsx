@@ -1,28 +1,40 @@
 import { useState } from 'react';
 import './Navigation.scss';
-import {
-  FaHome,
-  FaUserFriends,
-  FaComments,
-  FaQuestionCircle,
-  FaCog,
-  FaLock,
-  FaSignOutAlt,
-} from 'react-icons/fa';
+import { FaUserFriends, FaSignOutAlt, FaBriefcase } from 'react-icons/fa';
+import { RiFoldersFill } from 'react-icons/ri';
 import { logout } from '../../api/auth';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-const Navigation = () => {
+const Navigation = ({ activeTab, setActiveTab }) => {
   const [activeIndex, setActiveIndex] = useState(null);
   const nav = useNavigate();
 
   const navItems = [
-    { id: 'home', icon: <FaHome />, title: 'Адмін панель' },
-    { id: 'customers', icon: <FaUserFriends />, title: 'Клієнти' },
-    { id: 'messages', icon: <FaComments />, title: 'Повідомлення' },
-    { id: 'help', icon: <FaQuestionCircle />, title: 'Довідка' },
-    { id: 'settings', icon: <FaCog />, title: 'Налаштування' },
-    { id: 'password', icon: <FaLock />, title: 'Пароль' },
+    {
+      id: 'users',
+      icon: <FaUserFriends />,
+      title: 'Користувачі',
+      path: '/users',
+    },
+    {
+      id: 'categories',
+      icon: <RiFoldersFill />,
+      title: 'Категорії',
+      path: '/categories',
+    },
+    {
+      id: 'scrappers',
+      icon: <FaBriefcase />,
+      title: 'Скрапери',
+      path: '/scrappers',
+    },
+    {
+      id: 'books',
+      icon: <FaBriefcase />,
+      title: 'Книги',
+      path: '/books',
+    },
     { id: 'signout', icon: <FaSignOutAlt />, title: 'Вийти' },
   ];
 
@@ -51,8 +63,16 @@ const Navigation = () => {
           <li
             key={item.id}
             onMouseOver={() => handleMouseOver(index)}
-            className={activeIndex === index ? 'hovered' : ''}
-            onClick={item.id === 'signout' ? handleLogout : null}
+            className={`${activeIndex === index ? 'hovered' : ''} ${
+              activeTab === item.id ? 'active' : ''
+            }`}
+            onClick={() => {
+              if (item.id === 'signout') {
+                handleLogout();
+              } else {
+                setActiveTab(item.id); // Оновлюємо активну вкладку
+              }
+            }}
           >
             <a href="#">
               <span className="icon icon-large">{item.icon}</span>
@@ -63,6 +83,11 @@ const Navigation = () => {
       </ul>
     </div>
   );
+};
+
+Navigation.propTypes = {
+  activeTab: PropTypes.string.isRequired,
+  setActiveTab: PropTypes.func.isRequired,
 };
 
 export default Navigation;

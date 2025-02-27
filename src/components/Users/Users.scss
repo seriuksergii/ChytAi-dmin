@@ -6,18 +6,18 @@ $in-progress-color: #1795ce;
 $white: #fff;
 $black: #000;
 
-.recent-orders-container {
+.users-container {
   position: relative;
   width: 100%;
   padding: 20px;
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr;
   grid-gap: 30px;
   font-size: 20px;
-  font-weight: 800;
+  font-weight: 400;
 }
 
-.recent-orders-card {
+.users-card {
   position: relative;
   display: grid;
   min-height: 500px;
@@ -75,11 +75,11 @@ table {
       }
 
       &:nth-child(2) {
-        text-align: end;
+        text-align: start;
       }
 
       &:nth-child(3) {
-        text-align: center;
+        text-align: left;
       }
     }
   }
@@ -92,20 +92,49 @@ table {
   font-size: 14px;
   font-weight: 500;
   text-transform: uppercase;
+}
 
-  &.delivered {
-    background: $delivered-color;
+.admin {
+  background-color: #ffcc00;
+  color: #000;
+}
+
+.status.user {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+
+  button {
+    background-color: $primary-color;
+    color: $white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s;
+
+    &:disabled {
+      background-color: rgba(216, 143, 66, 0.5);
+      cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: ($primary-color, 10%);
+    }
   }
 
-  &.pending {
-    background: $pending-color;
-  }
-
-  &.return {
-    background: $return-color;
-  }
-
-  &.inProgress {
-    background: $in-progress-color;
+  span {
+    margin: 0 10px;
+    font-weight: 600;
   }
 }
