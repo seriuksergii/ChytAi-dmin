@@ -67,19 +67,20 @@ table {
       color: $white;
     }
 
-    td {
+    td,
+    th {
       padding: 10px;
+      text-align: center;
 
-      &:last-child {
-        text-align: end;
+      &:nth-child(1) {
+        text-align: start;
       }
-
       &:nth-child(2) {
         text-align: start;
       }
 
       &:nth-child(3) {
-        text-align: left;
+        text-align: start;
       }
     }
   }
@@ -128,13 +129,61 @@ table {
       cursor: not-allowed;
     }
 
-    &:hover:not(:disabled) {
-      background-color: ($primary-color, 10%);
+    &.active {
+      background-color: #fff;
+      font-weight: bold;
+      color: $primary-color;
+      border: 1px solid $primary-color;
     }
   }
 
-  span {
-    margin: 0 10px;
-    font-weight: 600;
+  .total-pages {
+    margin-left: 10px;
+    font-size: 16px;
+    color: $black;
   }
+}
+
+span {
+  margin: 0 10px;
+  font-weight: 600;
+}
+
+.create-user-button {
+  position: fixed;
+  right: 60px;
+  top: 130px;
+  padding: 10px 20px;
+  background: #4caf50;
+  color: $white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background: darken(#92c794, 10%);
+  }
+}
+
+.edit-user-button,
+.delete-user-button {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  background-color: #fff;
+
+  &:hover {
+    background: ($primary-color, 10%);
+  }
+}
+
+.edit-user-button {
+  margin-right: 10px;
 }

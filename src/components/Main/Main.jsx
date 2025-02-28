@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Categories from '../Categories/Categories';
 import Scrappers from '../Scrappers/Scrappers';
 import Users from '../Users/Users';
@@ -5,8 +6,13 @@ import './Main.scss';
 import { GoSearch } from 'react-icons/go';
 import PropTypes from 'prop-types';
 
-
 const Main = ({ activeTab }) => {
+  const [searchQuery, setSearchQuery] = useState(''); // Стан для пошукового запиту
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value); // Оновлення стану при зміні введення
+  };
+
   return (
     <div className="main__container">
       <div className="topbar">
@@ -16,6 +22,8 @@ const Main = ({ activeTab }) => {
               className="search__input"
               type="text"
               placeholder="Search here..."
+              value={searchQuery} // Підключення стану
+              onChange={handleSearchChange} // Обробник зміни
             />
             <GoSearch className="main__icon" />
           </div>
@@ -25,13 +33,13 @@ const Main = ({ activeTab }) => {
         </div>
       </div>
 
-      {activeTab === 'users' && <Users />}
-      {activeTab === 'categories' && <Categories />}
-      {activeTab === 'scrappers' && <Scrappers />}
-     
+      {activeTab === 'users' && <Users searchQuery={searchQuery} />}
+      {activeTab === 'categories' && <Categories searchQuery={searchQuery} />}
+      {activeTab === 'scrappers' && <Scrappers searchQuery={searchQuery} />}
     </div>
   );
 };
+
 Main.propTypes = {
   activeTab: PropTypes.string.isRequired,
 };

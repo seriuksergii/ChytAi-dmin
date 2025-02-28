@@ -95,22 +95,25 @@ export const get_notes = async () => {
   }
 };
 
-export const get_users = async () => {
+export const get_users = async (page = 1, limit = 10) => {
   try {
     const token = localStorage.getItem('token');
-
     if (!token) throw new Error('Token not found');
 
     const response = await axios.get(USERS_URL, {
       headers: { Authorization: `Bearer ${token}` },
+      params: { page, limit },
     });
 
     console.log('API Response:', response.data);
 
-    return Array.isArray(response.data.results) ? response.data.results : [];
+    return {
+      users: Array.isArray(response.data.results) ? response.data.results : [],
+      total: response.data.count || 0,
+    };
   } catch (error) {
     console.error('Failed to fetch users:', error);
-    return [];
+    return { users: [], total: 0 };
   }
 };
 
@@ -145,5 +148,59 @@ export const authenticated_user = async () => {
   } catch (error) {
     console.error('Failed to get authenticated user:', error);
     return null;
+  }
+};
+
+export const create_user = async (userData) => {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('Token not found');
+
+    console.log('Відправлені дані для створення користувача:', userData);
+
+    const response = await axios.post(USERS_URL, userData, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    console.log('Відповідь від сервера:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error(
+      'Failed to create user:',
+      error.response?.data || error.message
+    );
+    return null;
+  }
+};
+
+export const update_user = async (id, userData) => {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('Token not found');
+
+    const response = await axios.put(`${USERS_URL}${id}/`, userData, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('Failed to update user:', error);
+    return null;
+  }
+};
+
+export const delete_user = async (id) => {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('Token not found');
+
+    await axios.delete(`${USERS_URL}${id}/`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    return true;
+  } catch (error) {
+    console.error('Failed to delete user:', error);
+    return false;
   }
 };
