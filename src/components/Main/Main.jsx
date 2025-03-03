@@ -3,30 +3,27 @@ import Categories from '../Categories/Categories';
 import Scrappers from '../Scrappers/Scrappers';
 import Users from '../Users/Users';
 import './Main.scss';
-import { GoSearch } from 'react-icons/go';
 import PropTypes from 'prop-types';
+import Search from '../Search/Search';
+import BookList from '../BookList/BookList';
+import BookDetail from '../BookDetail/BookDetail';
 
 const Main = ({ activeTab }) => {
-  const [searchQuery, setSearchQuery] = useState(''); // Стан для пошукового запиту
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value); // Оновлення стану при зміні введення
+  const handleSearch = () => {
+    console.log('Пошук виконано для:', searchQuery);
   };
 
   return (
     <div className="main__container">
       <div className="topbar">
-        <div className="search">
-          <div className="search">
-            <input
-              className="search__input"
-              type="text"
-              placeholder="Search here..."
-              value={searchQuery} // Підключення стану
-              onChange={handleSearchChange} // Обробник зміни
-            />
-            <GoSearch className="main__icon" />
-          </div>
+        <div className="search-container">
+          <Search
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            onSearch={handleSearch}
+          />
         </div>
         <div className="user">
           <img src="/user-icon.png" alt="user" />
@@ -36,6 +33,8 @@ const Main = ({ activeTab }) => {
       {activeTab === 'users' && <Users searchQuery={searchQuery} />}
       {activeTab === 'categories' && <Categories searchQuery={searchQuery} />}
       {activeTab === 'scrappers' && <Scrappers searchQuery={searchQuery} />}
+      {activeTab === 'books' && <BookList searchQuery={searchQuery} />}
+      {activeTab === 'books/:id' && <BookDetail searchQuery={searchQuery} />}
     </div>
   );
 };

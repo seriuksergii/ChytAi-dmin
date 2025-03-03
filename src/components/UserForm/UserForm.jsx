@@ -13,7 +13,7 @@ const UserForm = ({ user, onSuccess, onCancel }) => {
 
   useEffect(() => {
     if (user) {
-      setFormData(user);
+      setFormData({ ...user });
     }
   }, [user]);
 
@@ -27,65 +27,75 @@ const UserForm = ({ user, onSuccess, onCancel }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Дані форми перед відправкою:', formData); // Логування
-
-    const response = user
-      ? await update_user(user.id, formData)
-      : await create_user(formData);
-
-    console.log('Відповідь від API:', response); // Логування
-
-    if (response) {
-      onSuccess();
+    try {
+      const response = user
+        ? await update_user(user.id, formData)
+        : await create_user(formData);
+      if (response) {
+        onSuccess();
+      }
+    } catch (error) {
+      console.error('Помилка при збереженні користувача:', error);
     }
   };
-
   return (
-    <form onSubmit={handleSubmit} className="user-form">
-      <label>
-        Імя:
-        <input
-          type="text"
-          name="first_name"
-          value={formData.first_name}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Прізвище:
-        <input
-          type="text"
-          name="last_name"
-          value={formData.last_name}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Email:
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Адміністратор:
-        <input
-          type="checkbox"
-          name="is_staff"
-          checked={formData.is_staff}
-          onChange={handleChange}
-        />
-      </label>
-      <button type="submit">{user ? 'Оновити' : 'Створити'}</button>
-      <button type="button" onClick={onCancel}>Скасувати</button>
-    </form>
+    <>
+      <div className="user-form-overlay" onClick={onCancel}></div>
+      <form onSubmit={handleSubmit} className="user-form">
+        <label>
+          Імя:
+          <input
+            type="text"
+            name="first_name"
+            value={formData.first_name}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label>
+          Прізвище:
+          <input
+            type="text"
+            name="last_name"
+            value={formData.last_name}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label>
+          Email:
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label>
+          Адміністратор:
+          <input
+            type="checkbox"
+            name="is_staff"
+            checked={formData.is_staff}
+            onChange={handleChange}
+          />
+        </label>
+        <button
+          type="submit"
+          disabled={
+            !formData.first_name || !formData.last_name || !formData.email
+          }
+        >
+          {user ? 'Оновити' : 'Створити'}
+        </button>
+        <button type="button" onClick={onCancel}>
+          Скасувати
+        </button>
+      </form>
+    </>
   );
-};
+}  
 
 UserForm.propTypes = {
   user: PropTypes.shape({

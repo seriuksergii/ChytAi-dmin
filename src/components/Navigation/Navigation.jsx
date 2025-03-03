@@ -70,7 +70,7 @@ const Navigation = ({ activeTab, setActiveTab }) => {
               if (item.id === 'signout') {
                 handleLogout();
               } else {
-                setActiveTab(item.id); // Оновлюємо активну вкладку
+                setActiveTab(item.id); 
               }
             }}
           >

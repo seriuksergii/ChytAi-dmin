@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import './Scrappers.scss'; // Стилі для скраперів
+import './Scrappers.scss';
 import { get_scrappers } from '../../api/auth';
-import { MdArrowBack, MdArrowForward } from 'react-icons/md'; // Іконки
+
 import Loader from '../Loader/Loader';
+import Pagination from '../Pagination/Pagination';
 
 const Scrappers = () => {
   const [scrappers, setScrappers] = useState([]);
@@ -31,7 +32,10 @@ const Scrappers = () => {
 
   const indexOfLastScrapper = currentPage * scrappersPerPage;
   const indexOfFirstScrapper = indexOfLastScrapper - scrappersPerPage;
-  const currentScrappers = scrappers.slice(indexOfFirstScrapper, indexOfLastScrapper);
+  const currentScrappers = scrappers.slice(
+    indexOfFirstScrapper,
+    indexOfLastScrapper
+  );
   const totalPages = Math.ceil(scrappers.length / scrappersPerPage);
 
   return (
@@ -55,7 +59,11 @@ const Scrappers = () => {
                   <td>{scrapper.id}</td>
                   <td>{scrapper.name}</td>
                   <td>
-                    <span className={`status ${scrapper.is_active ? 'active' : 'inactive'}`}>
+                    <span
+                      className={`status ${
+                        scrapper.is_active ? 'active' : 'inactive'
+                      }`}
+                    >
                       {scrapper.is_active ? 'Активний' : 'Неактивний'}
                     </span>
                   </td>
@@ -69,25 +77,11 @@ const Scrappers = () => {
           </tbody>
         </table>
 
-        <div className="pagination">
-          <button
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-          >
-            <MdArrowBack /> {/* Іконка вліво */}
-          </button>
-          <span>
-            Сторінка {currentPage} з {totalPages}
-          </span>
-          <button
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-            }
-            disabled={currentPage === totalPages}
-          >
-            <MdArrowForward /> {/* Іконка вправо */}
-          </button>
-        </div>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+        />
       </div>
     </div>
   );

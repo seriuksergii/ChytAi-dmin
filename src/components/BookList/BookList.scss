@@ -2,7 +2,7 @@ $primary-color: #d88f42;
 $white: #fff;
 $black: #000;
 
-.users-container {
+.books-container {
   position: relative;
   width: 100%;
   padding: 20px;
@@ -13,7 +13,7 @@ $black: #000;
   font-weight: 400;
 }
 
-.users-card {
+.books-card {
   position: relative;
   display: grid;
   min-height: 500px;
@@ -75,25 +75,6 @@ table {
   }
 }
 
-.status {
-  padding: 2px 4px;
-  color: $white;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: 500;
-  text-transform: uppercase;
-
-  &.admin {
-    background-color: #ffcc00;
-    color: #000;
-  }
-
-  &.user {
-    background-color: #4caf50;
-    color: #fff;
-  }
-}
-
 .pagination {
   display: flex;
   justify-content: center;
@@ -133,21 +114,8 @@ table {
   }
 }
 
-.edit-user-button,
-.delete-user-button {
-  padding: 10px;
-  border-radius: 50%;
-  border: none;
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-  background-color: #fff;
-
-  &:hover {
-    background: rgba($primary-color, 0.1);
-  }
-}
-
-.edit-user-button {
-  margin-right: 10px;
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 20px;
 }

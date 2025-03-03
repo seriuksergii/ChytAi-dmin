@@ -15,7 +15,8 @@ const DashboardPage = () => {
       <Navigation activeTab={activeTab} setActiveTab={setActiveTab} />
       <div className="main">
         <div className="details">
-          <Main activeTab={activeTab} /> 
+          <Main activeTab={activeTab} />
+          
         </div>
       </div>
     </div>

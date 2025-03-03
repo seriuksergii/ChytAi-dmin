@@ -3,12 +3,13 @@ import axios from 'axios';
 const BASE_URL = 'https://toread.onrender.com/';
 const LOGIN_URL = `${BASE_URL}moderator/auth/login/`;
 const USERS_URL = `${BASE_URL}moderator/users/`;
+const USER_URL = `${BASE_URL}moderator/users/{id}/`;
 const CATEGORIES_URL = `${BASE_URL}moderator/categories/`;
 const SCRAPPERS_URL = `${BASE_URL}moderator/scrappers/`;
-const BOOKS_URL = `${BASE_URL}moderator/books/`;
+const BOOKS_URL = `${BASE_URL}books/`;
 const REGISTER_URL = `${BASE_URL}register/`;
 const LOGOUT_URL = `${BASE_URL}logout/`;
-const NOTES_URL = `${BASE_URL}moderator/notes/`;
+// const NOTES_URL = `${BASE_URL}moderator/notes/`;
 const AUTHENTICATED_URL = `${BASE_URL}authenticated/`;
 
 axios.defaults.withCredentials = true;
@@ -28,22 +29,56 @@ export const login = async (email, password) => {
   }
 };
 
-export const get_books = async () => {
+export const logout = async () => {
+  try {
+    const response = await axios.post(LOGOUT_URL);
+    return response.data;
+  } catch (error) {
+    console.error('Logout failed:', error);
+    return false;
+  }
+};
+
+export const register = async (username, email, password) => {
+  try {
+    const response = await axios.post(REGISTER_URL, {
+      username,
+      email,
+      password,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Registration failed:', error);
+    return false;
+  }
+};
+
+export const get_books = async (page = 1) => {
   try {
     const token = localStorage.getItem('token');
 
-    if (!token) throw new Error('Token not found');
+    if (!token) {
+      console.error('Токен не знайдено');
+      return { results: [], count: 0, next: null, previous: null };
+    }
 
-    const response = await axios.get(BOOKS_URL, {
+    const response = await axios.get(`${BOOKS_URL}?page=${page}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
     console.log('API Response:', response.data);
 
-    return Array.isArray(response.data.results) ? response.data.results : [];
+    return {
+      results: Array.isArray(response.data.results)
+        ? response.data.results
+        : [],
+      count: response.data.count || 0,
+      next: response.data.next || null,
+      previous: response.data.previous || null,
+    };
   } catch (error) {
     console.error('Failed to fetch books:', error);
-    return [];
+    return { results: [], count: 0, next: null, previous: null };
   }
 };
 
@@ -85,27 +120,25 @@ export const get_categories = async () => {
   }
 };
 
-export const get_notes = async () => {
-  try {
-    const response = await axios.get(NOTES_URL);
-    return response.data;
-  } catch (error) {
-    console.error('Failed to fetch notes:', error);
-    return [];
-  }
-};
+// export const get_notes = async () => {
+//   try {
+//     const response = await axios.get(NOTES_URL);
+//     return response.data;
+//   } catch (error) {
+//     console.error('Failed to fetch notes:', error);
+//     return [];
+//   }
+// };
 
-export const get_users = async (page = 1, limit = 10) => {
+export const get_users = async (page = 1, limit = 10, searchQuery = '') => {
   try {
     const token = localStorage.getItem('token');
     if (!token) throw new Error('Token not found');
 
     const response = await axios.get(USERS_URL, {
       headers: { Authorization: `Bearer ${token}` },
-      params: { page, limit },
+      params: { page, limit, search: searchQuery },
     });
-
-    console.log('API Response:', response.data);
 
     return {
       users: Array.isArray(response.data.results) ? response.data.results : [],
@@ -114,30 +147,6 @@ export const get_users = async (page = 1, limit = 10) => {
   } catch (error) {
     console.error('Failed to fetch users:', error);
     return { users: [], total: 0 };
-  }
-};
-
-export const logout = async () => {
-  try {
-    const response = await axios.post(LOGOUT_URL);
-    return response.data;
-  } catch (error) {
-    console.error('Logout failed:', error);
-    return false;
-  }
-};
-
-export const register = async (username, email, password) => {
-  try {
-    const response = await axios.post(REGISTER_URL, {
-      username,
-      email,
-      password,
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Registration failed:', error);
-    return false;
   }
 };
 
@@ -156,13 +165,10 @@ export const create_user = async (userData) => {
     const token = localStorage.getItem('token');
     if (!token) throw new Error('Token not found');
 
-    console.log('Відправлені дані для створення користувача:', userData);
-
-    const response = await axios.post(USERS_URL, userData, {
+    const response = await axios.post(USER_URL, userData, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    console.log('Відповідь від сервера:', response.data);
     return response.data;
   } catch (error) {
     console.error(

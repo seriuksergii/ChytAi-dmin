@@ -35,6 +35,36 @@ $input-height: 50px;
   }
 }
 
+.login-form .login-input {
+  width: 100%;
+  padding: 1rem 1.25rem 1rem 3rem;
+  background: transparent;
+  border: 2px solid $primary-color;
+  border-radius: $border-radius;
+  font-size: 1rem;
+  color: $white-color;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+  height: $input-height;
+
+  &::placeholder {
+    color: $input-placeholder;
+  }
+
+  &:focus {
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+  }
+
+  &.input-error {
+    border-color: $error-color;
+  }
+
+  &.input-email {
+    padding-left: 3rem;
+  }
+}
+
 .login-form {
   display: grid;
   gap: 1.5rem;

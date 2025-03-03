@@ -1,19 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import './Users.scss';
 import { get_users, delete_user } from '../../api/auth';
-import {
-  MdAdd,
-  MdArrowBack,
-  MdArrowForward,
-  MdDelete,
-  MdEdit,
-  MdFirstPage,
-  MdLastPage,
-} from 'react-icons/md';
+import { MdDelete, MdEdit } from 'react-icons/md';
 import Loader from '../Loader/Loader';
 import UserForm from '../UserForm/UserForm';
+import PropTypes from 'prop-types';
+import Pagination from '../Pagination/Pagination';
 
-const Users = () => {
+const Users = ({ searchQuery }) => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,10 +16,14 @@ const Users = () => {
   const [editingUser, setEditingUser] = useState(null);
   const [showForm, setShowForm] = useState(false);
 
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     setLoading(true);
     try {
-      const { users, total } = await get_users(currentPage, usersPerPage);
+      const { users, total } = await get_users(
+        currentPage,
+        usersPerPage,
+        searchQuery
+      );
       setUsers(users);
       setTotalUsers(total);
     } catch (error) {
@@ -33,44 +31,39 @@ const Users = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentPage, usersPerPage, searchQuery]);
 
   useEffect(() => {
     fetchUsers();
-  }, [currentPage, usersPerPage]);
+  }, [fetchUsers]);
 
-  const handleDelete = async (id) => {
+  const handleDelete = useCallback(async (id) => {
     if (window.confirm('Ви впевнені, що хочете видалити цього користувача?')) {
       const success = await delete_user(id);
-      if (success) fetchUsers();
+      if (success) {
+        setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+      }
     }
-  };
+  }, []);
 
-  const handleEdit = (user) => {
+  const handleEdit = useCallback((user) => {
     setEditingUser(user);
     setShowForm(true);
-  };
+  }, []);
 
-  const handleCreate = () => {
-    setEditingUser(null);
-    setShowForm(true);
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
   };
 
   if (loading) return <Loader />;
 
   const totalPages = Math.ceil(totalUsers / usersPerPage);
-  const visiblePages = 5;
-  const startPage = Math.max(1, currentPage - Math.floor(visiblePages / 2));
-  const endPage = Math.min(totalPages, startPage + visiblePages - 1);
 
   return (
     <div className="users-container">
       <div className="users-card">
         <div className="card-header">
           <h2>Користувачі</h2>
-          <button onClick={handleCreate} className="create-user-button">
-            <MdAdd /> Додати користувача
-          </button>
         </div>
 
         {showForm ? (
@@ -115,7 +108,7 @@ const Users = () => {
                           onClick={() => handleEdit(user)}
                           className="edit-user-button"
                         >
-                          <MdEdit style={{ fontSize: 20, color: '#e9b10a', marginRight: '10px' }} />
+                          <MdEdit style={{ fontSize: 20, color: '#e9b10a' }} />
                         </button>
                         <button
                           onClick={() => handleDelete(user.id)}
@@ -134,54 +127,20 @@ const Users = () => {
               </tbody>
             </table>
 
-            <div className="pagination">
-              <button
-                onClick={() => setCurrentPage(1)}
-                disabled={currentPage === 1}
-              >
-                <MdFirstPage />
-              </button>
-              <button
-                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                disabled={currentPage === 1}
-              >
-                <MdArrowBack />
-              </button>
-              {Array.from(
-                { length: endPage - startPage + 1 },
-                (_, i) => startPage + i
-              ).map((page) => (
-                <button
-                  key={page}
-                  className={`page-button ${
-                    currentPage === page ? 'active' : ''
-                  }`}
-                  onClick={() => setCurrentPage(page)}
-                >
-                  {page}
-                </button>
-              ))}
-              <button
-                onClick={() =>
-                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                }
-                disabled={currentPage === totalPages}
-              >
-                <MdArrowForward />
-              </button>
-              <button
-                onClick={() => setCurrentPage(totalPages)}
-                disabled={currentPage === totalPages}
-              >
-                <MdLastPage />
-              </button>
-              <span className="total-pages">з {totalPages}</span>
-            </div>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
           </>
         )}
       </div>
     </div>
   );
+};
+
+Users.propTypes = {
+  searchQuery: PropTypes.string.isRequired,
 };
 
 export default Users;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './Categories.scss';
 import { get_categories } from '../../api/auth';
-import { MdArrowBack, MdArrowForward } from 'react-icons/md'; // Importing the icons
+import { MdArrowBack, MdArrowForward } from 'react-icons/md'; 
 import Loader from '../Loader/Loader';
 
 const Categories = () => {

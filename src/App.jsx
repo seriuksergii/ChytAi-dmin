@@ -3,8 +3,9 @@ import './App.scss';
 import { AuthProvider } from './context/useAuth';
 import DashboardPage from './pages/DashboardPage/DashboardPage';
 import LoginPage from './pages/LoginPage/LoginPage';
-import RegisterPage from './pages/RegisterPage/RegisterPage';
 import Users from './components/Users/Users';
+import BookDetail from './components/BookDetail/BookDetail';
+import BookList from './components/BookList/BookList';
 
 function App() {
   return (
@@ -14,8 +15,9 @@ function App() {
           <Route path="/" element={<LoginPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
           <Route path="/users" element={<Users />} />
+          <Route path="/books" element={<BookList />} />
+          <Route path="/books/:id" element={<BookDetail />} />
         </Routes>
       </AuthProvider>
     </Router>

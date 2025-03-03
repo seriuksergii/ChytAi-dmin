@@ -71,11 +71,11 @@ table {
   text-transform: uppercase;
 
   &.active {
-    background-color: $active-color; /* Зелений колір для активних */
+    background-color: $active-color; 
   }
 
   &.inactive {
-    background-color: $inactive-color; /* Червоний колір для неактивних */
+    background-color: $inactive-color; 
   }
 }
 

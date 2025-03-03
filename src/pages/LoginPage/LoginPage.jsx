@@ -21,7 +21,7 @@ const LoginPage = () => {
     try {
       const loginResult = await loginUser(data.email, data.password);
       if (loginResult) {
-        nav('/dashboard'); 
+        nav('/dashboard');
       } else {
         alert('Невірні дані для входу. Спробуйте ще раз.');
       }
@@ -30,11 +30,10 @@ const LoginPage = () => {
       alert('Сталася помилка під час входу. Спробуйте ще раз.');
     }
   };
-  
 
-  const handleNavigate = () => {
-    nav('/register');
-  };
+  // const handleNavigate = () => {
+  //   nav('/register');
+  // };
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -51,7 +50,9 @@ const LoginPage = () => {
                 id="email"
                 type="email"
                 placeholder="Email"
-                className={`login-input ${errors.email ? 'input-error' : ''}`}
+                className={`login-input input-email ${
+                  errors.email ? 'input-error' : ''
+                }`}
                 {...register('email', {
                   required: "Обов'язкове поле",
                   pattern: {
@@ -98,9 +99,9 @@ const LoginPage = () => {
             Login
           </button>
         </form>
-        <p className="signup-prompt" onClick={handleNavigate}>
+        {/* <p className="signup-prompt" onClick={handleNavigate}>
           Don’t have an account? Sign up
-        </p>
+        </p> */}
       </div>
     </div>
   );
